@@ -13,19 +13,16 @@ if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(42)
 
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    TRACKING_DIR = os.path.join(BASE_DIR, "mlruns")
-
-    mlflow.set_tracking_uri(f"file:{TRACKING_DIR}")
-    mlflow.set_experiment("Banknote-LogReg-MLProject")
-
     C_value = float(sys.argv[1]) if len(sys.argv) > 1 else 1.0
     max_iter = int(sys.argv[2]) if len(sys.argv) > 2 else 500
 
     dataset_path = (
         sys.argv[3]
         if len(sys.argv) > 3
-        else os.path.join(BASE_DIR, "data_banknote_preprocessing.csv")
+        else os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "data_banknote_preprocessing.csv"
+        )
     )
 
     data = pd.read_csv(dataset_path)
@@ -38,26 +35,27 @@ if __name__ == "__main__":
     )
 
     input_example = X_train.head(5)
-    with mlflow.start_run():
-        model = LogisticRegression(
-            C=C_value,
-            max_iter=max_iter,
-            solver="liblinear"
-        )
 
-        model.fit(X_train, y_train)
+    model = LogisticRegression(
+        C=C_value,
+        max_iter=max_iter,
+        solver="liblinear"
+    )
 
-        y_pred = model.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred)
+    model.fit(X_train, y_train)
 
-        mlflow.log_param("C", C_value)
-        mlflow.log_param("max_iter", max_iter)
-        mlflow.log_metric("accuracy", accuracy)
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
 
-        mlflow.sklearn.log_model(
-            sk_model=model,
-            artifact_path="model",
-            input_example=input_example
-        )
+    # Manual logging (ADVANCED)
+    mlflow.log_param("C", C_value)
+    mlflow.log_param("max_iter", max_iter)
+    mlflow.log_metric("accuracy", accuracy)
 
-        print(f"Accuracy: {accuracy:.2f}")
+    mlflow.sklearn.log_model(
+        sk_model=model,
+        artifact_path="model",
+        input_example=input_example
+    )
+
+    print(f"Accuracy: {accuracy:.2f}")
