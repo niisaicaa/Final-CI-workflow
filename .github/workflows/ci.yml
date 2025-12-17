@@ -2,7 +2,8 @@ name: MLflow CI Pipeline (Advanced)
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -10,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -22,20 +24,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install mlflow==2.19.0 scikit-learn pandas numpy
 
-    - name: Run MLflow Project
+    - name: Run MLflow Project (Training)
       run: |
-        set -x
         cd MLProject
-        ls -l
         mlflow run . \
+          --env-manager=local \
           -P C_value=1.0 \
           -P max_iter=500 \
           -P dataset=data_banknote_preprocessing.csv
 
-    - name: Get latest run_id
+    - name: Get latest MLflow run_id
       run: |
         RUN_ID=$(ls -td MLProject/mlruns/0/*/ | head -n 1 | cut -d'/' -f4)
         echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+        echo "Latest run_id: $RUN_ID"
 
     - name: Build Docker Image
       run: |
