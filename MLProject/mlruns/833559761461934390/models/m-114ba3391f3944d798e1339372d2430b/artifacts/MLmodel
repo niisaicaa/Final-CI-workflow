@@ -1,0 +1,35 @@
+artifact_path: file:D:\SMSML_Anisa\Workflow-CI\MLProject\mlruns/833559761461934390/models/m-114ba3391f3944d798e1339372d2430b/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.0
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.5.2
+is_signature_from_type_hint: false
+mlflow_version: 3.7.0
+model_id: m-114ba3391f3944d798e1339372d2430b
+model_size_bytes: 2170
+model_uuid: m-114ba3391f3944d798e1339372d2430b
+prompts: null
+run_id: d40812efbe5a4efea30e1f730d03d433
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "variance", "required": true}, {"type": "double",
+    "name": "skewness", "required": true}, {"type": "double", "name": "curtosis",
+    "required": true}, {"type": "double", "name": "entropy", "required": true}]'
+  outputs: '[{"type": "double", "required": true}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-12-17 05:35:38.858750'

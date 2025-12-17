@@ -5,14 +5,8 @@ conda_env: conda.yaml
 entry_points:
   main:
     parameters:
-      C:
-        type: float
-        default: 1.0
-      max_iter:
-        type: int
-        default: 500
-      dataset:
-        type: string
-        default: "data_banknote_preprocessing.csv"
+      C_value: {type: float, default: 1.0}
+      max_iter: {type: int, default: 500}
+      dataset: {type: string, default: data_banknote_preprocessing.csv}
     command: >
-      python modelling.py {C} {max_iter} {dataset}
+      python modelling.py {C_value} {max_iter} {dataset}

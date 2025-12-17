@@ -1,0 +1,10 @@
+artifact_location: file:D:\SMSML_Anisa\Workflow-CI\MLProject\mlruns/833559761461934390/models/m-114ba3391f3944d798e1339372d2430b/artifacts
+creation_timestamp: 1765949738787
+experiment_id: '833559761461934390'
+last_updated_timestamp: 1765949756936
+model_id: m-114ba3391f3944d798e1339372d2430b
+model_type: null
+name: model
+source_run_id: d40812efbe5a4efea30e1f730d03d433
+status: 2
+status_message: null
